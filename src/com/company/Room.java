@@ -9,6 +9,8 @@ public class Room {
     boolean wasVisited = false;
     boolean hasRight = true;
     boolean hasBottom = true;
+    boolean isStart;
+    boolean isFinish;
 
     public Room(int row, int col) {
         this.row = row;

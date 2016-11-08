@@ -68,7 +68,18 @@ public class Main {
         room.wasVisited = true;
         Room nextRoom = randomNeighbor(rooms,room.row,room.col);
         if (nextRoom == null) {
-           return false;
+            boolean isFinish = false;
+            for (Room[] row : rooms) {
+               for (Room room1 : row) {
+                   if (room1.isFinish) {
+                       isFinish = true;
+                   }
+               }
+            }
+            if (!isFinish) {
+               room.isFinish = true;
+            }
+            return false;
         }
         tearDownWall(room,nextRoom);
         while(createMaze(rooms,nextRoom));
@@ -78,6 +89,8 @@ public class Main {
     public static void main(String[] args) {
         Room[][] rooms = createRooms();
         createMaze(rooms, rooms[0][0]);
+        Room r = rooms[0][0];
+        r.isStart = true;
         for (Room[] row : rooms) {
             System.out.print(" _");
         }
@@ -85,7 +98,13 @@ public class Main {
         for (Room[] row : rooms) {
             System.out.print("|");
             for (Room room : row) {
-                if (room.hasBottom) {
+                if (room.isStart) {
+                    System.out.print("o");
+                }
+                else if (room.isFinish) {
+                    System.out.print("x");
+                }
+                else if (room.hasBottom) {
                     System.out.print("_");
                 }
                 else {
